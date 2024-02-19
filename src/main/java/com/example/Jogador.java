@@ -11,7 +11,10 @@ public class Jogador {
     public void receberCarta(Carta carta){
         cartas.add(carta);
         pontos += carta.getNumero();
+        if (pontos >= 11) pontos = 10;    
+        this.pontos += pontos;
     }
+
     public void parar(){
         parou = true;
     }

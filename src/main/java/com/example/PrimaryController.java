@@ -15,30 +15,37 @@ public class PrimaryController {
     @FXML private Label pontosJogador;
     @FXML private Label resultado;
 
-    // private Jogo jogo;
+    private Jogo jogo;
 
     public void turno(){
 
+        if(jogo.acabou()) return;
+        jogo.distribuirCartaParaJogador(jogo.jogador);
+        jogo.distribuirCartaParaJogador(jogo.computador);
+        if(jogo.acabou()) {
+            resultado.setText(jogo.resultado());
+        }
+        atualizar();
     }
 
     public void atualizar(){
-        // pontosJogador.setText("Jogador: " + jogo.jogador.getPontos());
-        // pontosMesa.setText("Mesa: " + jogo.computador.getPontos());
+        pontosJogador.setText("Jogador: " + jogo.jogador.getPontos());
+        pontosMesa.setText("Mesa: " + jogo.computador.getPontos());
         
-        // mesaDoJogador.getChildren().clear();
-        // mesaDoComputador.getChildren().clear();
+        mesaDoJogador.getChildren().clear();
+        mesaDoComputador.getChildren().clear();
 
-        // jogo.jogador.getCartas().forEach((carta) -> mesaDoJogador.getChildren().add(imagemCarta(carta)));
-        // jogo.computador.getCartas().forEach((carta) -> mesaDoComputador.getChildren().add(imagemCarta(carta)));
+        jogo.jogador.getCartas().forEach((carta) -> mesaDoJogador.getChildren().add(imagemCarta(carta)));
+        jogo.computador.getCartas().forEach((carta) -> mesaDoComputador.getChildren().add(imagemCarta(carta)));
     }
 
     public void novoJogo(){
-        // jogo = new Jogo();
-        // mesaDoJogador.getChildren().clear();
-        // mesaDoComputador.getChildren().clear();
-        // pontosJogador.setText("Jogador: 0");
-        // pontosMesa.setText("Mesa: 0");
-        // resultado.setText("");
+        jogo = new Jogo();
+        mesaDoJogador.getChildren().clear();
+        mesaDoComputador.getChildren().clear();
+        pontosJogador.setText("Jogador: 0");
+        pontosMesa.setText("Mesa: 0");
+        resultado.setText("");
     }
 
     public void pedirCarta(){
@@ -46,13 +53,13 @@ public class PrimaryController {
     }
 
     public void parar(){
-        // jogo.jogador.parar();
+        jogo.jogador.parar();
         turno();
     }
     
 
-    // private ImageView imagemCarta(Carta carta) {
-    //    return new ImageView(App.class.getResource(carta.imagePath()).toString());
-    // }
+    private ImageView imagemCarta(Carta carta) {
+        return new ImageView(App.class.getResource(carta.imagePath()).toString());
+    }
 
 }
